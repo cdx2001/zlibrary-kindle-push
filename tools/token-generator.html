@@ -1,12 +1,16 @@
 <!doctype html>
 <html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; form-action 'none'; base-uri 'none'">
-<title>Kindle Push 本地令牌生成器</title>
+<meta name="referrer" content="no-referrer">
+<title>生成 API_TOKEN · Z-Library → Kindle Push</title>
 <style>body{max-width:680px;margin:40px auto;padding:20px;font:18px/1.6 system-ui}input{width:100%;box-sizing:border-box;font:16px monospace;padding:12px}button{font:inherit;padding:10px;margin:12px 8px 12px 0}</style>
 <h1>生成 API_TOKEN</h1>
-<p>下载此文件后，用浏览器打开。只使用本机随机数，不发送网络请求。令牌用于本项目，不是 Cloudflare API Token，也不是邮箱授权码。</p>
+<p>直接点击下方按钮生成一把保护推送服务的访问钥匙。它不是 Cloudflare 账号令牌，也不是邮箱授权码。</p>
 <button id="generate">生成新令牌</button><button id="copy" disabled>复制令牌</button>
-<input id="token" readonly aria-label="API_TOKEN"><p id="status">生成后请保存在密码管理器中；部署和浏览器设置要使用同一个值。不要上传 GitHub 或发到聊天中。</p>
+<input id="token" readonly autocomplete="off" spellcheck="false" aria-label="API_TOKEN"><p id="status" role="status">尚未生成。生成后请私下保存；刷新或关闭本页会清空。</p>
+<ol><li>点击“生成新令牌”→“复制令牌”，得到 64 位随机字符串。</li><li>填入 Cloudflare 的 <strong>API_TOKEN</strong> Secret，并保存在自己的密码管理器中。</li><li>之后在自己的推送服务设置页填写<strong>同一个值</strong>，验证并保存。</li></ol>
+<p>生成和复制只在本机浏览器完成，不上传令牌、不写入持久存储、不加载外部脚本。网页首次打开需要下载页面；生成后不通过网络发送令牌。不要把令牌发到聊天或提交 GitHub。</p>
+<p><a href="./" target="_blank" rel="noopener noreferrer">打开四个参数的完整配置步骤 ↗</a></p>
 <script>
 const token=document.getElementById('token'),status=document.getElementById('status');
 document.getElementById('generate').onclick=()=>{token.value=Array.from(crypto.getRandomValues(new Uint8Array(32)),x=>x.toString(16).padStart(2,'0')).join('');document.getElementById('copy').disabled=false;status.textContent='已在本机生成。生成新值不会修改已部署服务；更换时需更新 Cloudflare Secret 和所有浏览器。';};

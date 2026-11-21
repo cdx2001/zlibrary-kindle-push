@@ -65,3 +65,9 @@ Cloudflare 一键按钮支持公开 GitHub/GitLab 仓库并自动配置资源；
 更新既有实例前等待 busy:false，记录旧部署版本。回滚到旧代码时保留已创建的 DO 绑定和迁移历史，不为了“清理”添加删除类 migration；也不要在有请求时切换代码。回滚后的脚本版本与上限需要重新核对。
 
 公开安装包使用 main 分支更新地址。验证 README 的暴力猴按钮指向 Mozilla 官方页面，安装按钮返回带 userscript 元数据的正式脚本。Windows/Android 的真实扩展安装弹窗仍需浏览器验收；自动测试不代替这一步。
+
+## 在线指南与令牌生成器
+
+主仓库通过 GitHub Pages 发布 `tools/`：根路径是四参数配置与安装导航，`/token-generator.html` 是无需下载的令牌生成器。`.github/workflows/pages.yml` 只在主仓库运行，避免使用者的一键部署副本因未启用 Pages 而失败；fork 如需自行托管，应修改仓库条件并启用 Settings → Pages → GitHub Actions。
+
+发布内容只有静态页面和按钮 SVG，不包含 Cloudflare Secrets。生成器使用本机 Web Crypto，不发送生成值，不写入持久存储。README 与导航页共用 232 × 48 的 SVG；导航页所有外链设置 target=_blank 和 noopener/noreferrer，GitHub README 自身仍受平台链接过滤规则影响。

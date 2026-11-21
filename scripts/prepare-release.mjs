@@ -8,7 +8,7 @@ if(!/^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\/[A-Za-z0-9][A-Za-z0-9._-]*$/.tes
 const url='https://github.com/'+repo;
 const file=path.join(root,'README.md');
 let readme=await fs.readFile(file,'utf8');
-readme=readme.replace(/https:\/\/deploy\.workers\.cloudflare\.com\/\?url=https:\/\/github\.com\/[^\s)]+/g,'https://deploy.workers.cloudflare.com/?url='+url);
+readme=readme.replace(/https:\/\/deploy\.workers\.cloudflare\.com\/\?url=https:\/\/github\.com\/[^\s)"'<>]+/g,'https://deploy.workers.cloudflare.com/?url='+url);
 readme=readme.replace(/https:\/\/raw\.githubusercontent\.com\/[^/\s]+\/[^/\s]+\/main\/install\/zlibrary-kindle-push\.user\.js/g,url.replace('https://github.com/','https://raw.githubusercontent.com/')+'/main/install/zlibrary-kindle-push.user.js');
 readme=readme.replace(/<!-- REVIEW-NOTICE-BEGIN -->[\s\S]*?<!-- REVIEW-NOTICE-END -->\s*/,'');
 await fs.writeFile(file,readme);

@@ -1,6 +1,6 @@
 # 完整部署与使用指南
 
-[返回简明 README](../README.md)。本页保留完整操作步骤；首次使用可先按 README 的快速流程完成，遇到具体问题再查这里。
+[返回 README](../README.md) · [打开在线四参数配置页](https://cdx2001.github.io/zlibrary-kindle-push/) · [直接生成 API_TOKEN](https://cdx2001.github.io/zlibrary-kindle-push/token-generator.html)。本页保留完整操作步骤；首次使用可先按 README 的快速流程完成，遇到具体问题再查这里。
 
 | 要做什么 | 跳转 |
 | --- | --- |
@@ -113,7 +113,7 @@ flowchart LR
 生成 API_TOKEN 的方法任选一种：
 
 - 用密码管理器生成至少 32 位随机字符，不含空格，使用可见 ASCII；本项目接受 32–256 位。
-- 下载项目中的 [本地令牌生成器](../tools/token-generator.html)：在 GitHub 文件页点击 **Download raw file / 下载原始文件**，保存 HTML 后用浏览器打开，点击生成。页面无外部脚本、无网络请求，使用本机 Web Crypto 随机数；不要在来源不明的在线网站生成。
+- 直接打开[项目 API_TOKEN 生成器](https://cdx2001.github.io/zlibrary-kindle-push/token-generator.html)，点“生成新令牌 → 复制令牌”。页面加载后，生成/复制只在本机执行，不上传令牌。若需离线使用，也可在[源码文件页](../tools/token-generator.html)选择 Download raw file，保存 HTML 后打开。
 - 已有 Node.js 的用户可执行 `npm run token`。命令只生成并显示，不上传或修改服务器；请私下保存输出。
 
 部署表单和各浏览器必须使用**同一个 API_TOKEN**。不需要把任何秘密写进仓库、README、油猴源码或 Issue。`.dev.vars.example` 只声明四个名称，公开文件中的值故意留空。
