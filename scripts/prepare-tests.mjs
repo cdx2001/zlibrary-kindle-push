@@ -3,9 +3,10 @@ import path from 'node:path';
 import { build, root } from './build.mjs';
 // Exercise the supported ceiling independently of the owner's production limit.
 // Tests never overwrite dist/ or change project.config.json.
-const {script}=await build({settings:{maxFileMB:50},outputDir:'.test/build'});
+const {script,installer}=await build({settings:{maxFileMB:50},outputDir:'.test/build'});
 await fs.mkdir(path.join(root,'.test'),{recursive:true});
 await fs.writeFile(path.join(root,'.test/kindle-push.user.js'),script.replaceAll('__SERVICE_ORIGIN__','https://demo.example'));
+await fs.writeFile(path.join(root,'.test/public-installer.user.js'),installer);
 // Create large ZIP transport fixtures locally. They are not reading/Kindle-conversion samples.
 const small=await fs.readFile(path.join(root,'test/fixtures/sample.epub'));
 function paddedZip(size) {

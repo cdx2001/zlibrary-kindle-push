@@ -84,3 +84,9 @@ X-File-Size: <exact decimal bytes>
 启用站点需要本次连接验证通过及真实点击；只接受不含用户名/密码的 HTTPS URL，排除当前服务 origin。持久保存 origin，按用户输入的完整网址打开新页，使用 noopener/noreferrer。启用站点不会自动推送；书籍页另一次真实点击才开始下载、上传。
 
 脚本显示名称自本版变更为 Z-Library → Kindle Push，内部 namespace 和 `/kindle-push.user.js` 地址保留。不同名称可能拥有不同私有存储；旧用户停用旧条目并重新配置，不做隐式跨脚本读取或秘密迁移。
+
+## 公开安装包
+
+`npm run build` 同时生成 Worker 和 `install/zlibrary-kindle-push.user.js`。公开脚本在共用 userscript 的服务入口插入 `src/installer-prefix.js`，将更新地址指向 package.json 对应 GitHub 仓库的 main 分支；不使用远程脚本加载器或 eval。没有服务时只注册连接菜单，并在本项目 GitHub 页或 /setup、/panel 显示连接栏；不会请求业务 API。
+
+使用者确认后保存 serviceOrigin，只取 HTTPS origin，不接受查询参数或 URL 凭据。更换服务清除旧 API_TOKEN。完整令牌配置仍在自己的服务页面进行。项目构建统一 LF 换行，测试核对已提交安装包与当前源码一致。公开包默认上限跟随仓库配置；修改实例上限后，应从该实例安装其专属脚本。

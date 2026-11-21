@@ -10,6 +10,6 @@ export async function releaseFiles() {
     if(stat.isDirectory()){for(const name of await fs.readdir(full))await visit(path.join(relative,name));}
     else files.push(relative.replaceAll('\\','/'));
   };
-  for(const item of [...names,'src','scripts','test','docs','tools','.github'])await visit(item);
+  for(const item of [...names,'src','scripts','test','docs','tools','install','.github'])await visit(item);
   return files.sort();
 }

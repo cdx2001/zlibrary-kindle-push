@@ -3,6 +3,26 @@
 **从 Z-Library 的书籍详情页，把你有权使用的 EPUB 推送到 Kindle。** 同一份脚本支持 Windows Firefox 与 Android Firefox，保留 Violentmonkey（暴力猴）作为脚本运行扩展。使用 Cloudflare Workers + SQLite Durable Object + 126 SMTP，可在免费计划配额内运行，无需购买服务器。
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cdx2001/zlibrary-kindle-push)
+[![安装暴力猴](https://img.shields.io/badge/2-安装暴力猴-F37622)](https://addons.mozilla.org/firefox/addon/violentmonkey/)
+[![安装推送脚本](https://img.shields.io/badge/3-安装推送脚本-176378)](https://raw.githubusercontent.com/cdx2001/zlibrary-kindle-push/main/install/zlibrary-kindle-push.user.js)
+
+**在 Firefox 中按顺序点击上面三个按钮。已经有服务或暴力猴时，跳过对应安装步骤。**
+
+已有旧版 Worker 的使用者，请先同步并重新部署本版项目，使设置页与脚本版本一致；仅更新 GitHub 文件不会自动更新未连接 GitHub 构建的 Worker。
+
+| 入口 | 点击后的操作 |
+| --- | --- |
+| ① 部署 Cloudflare | 按引导填入四个 Secrets，部署完成后保留自己的 Worker HTTPS 网址 |
+| ② 安装暴力猴 | 进入 Mozilla 官方商店，点“添加到 Firefox”并确认；Windows、Android 各装一次 |
+| ③ 安装推送脚本 | 直接打开可安装的正式脚本，在暴力猴确认安装；**不用复制源码或编辑脚本** |
+| 最后连接自己的服务 | 回到本仓库页面刷新，顶部出现“Z-Library → Kindle Push 已安装”；填入自己的 Worker 网址，点“连接我的服务，继续配置” |
+
+连接后在**自己的服务页面**验证并保存 API_TOKEN，再启用 Z-Library 站点。仓库页面只填服务网址，不填令牌或邮箱授权码。也可直接打开自己的 /setup 页面，脚本会预填当前网址，仍由你点击确认连接。
+
+没看到连接栏：刷新 README 页面；或打开暴力猴菜单 → **Kindle：连接或更换自己的 Cloudflare 服务**。如果脚本链接只显示代码，先确认暴力猴已启用，再点一次链接；仍不行才用自己的服务向导中的备用安装方法。
+
+公开安装包由同一份源码生成，**不绑定维护者的 Worker**。每位使用者服务网址不同，所以首次连接仍需填写自己的网址，或在自己服务的设置页确认预填网址。浏览器的扩展权限和脚本安装确认不能静默代办。[暴力猴官方安装入口](https://violentmonkey.github.io/get-it/)
+
 
 **一键部署**指点击按钮后，在 Cloudflare 的引导页面完成授权、填写四个 Secrets 和部署。它不会替你注册邮箱、开启 SMTP、设置 Amazon 发件人白名单或安装浏览器扩展。完成一次设置后，日常使用只需点书籍页上的推送按钮。
 
@@ -151,12 +171,12 @@ flowchart LR
 
 ## 6. 部署后跟着四步向导完成
 
-在实际使用的 Firefox 打开自己的生产服务网址，自动进入 `/setup`。安装和配置集中在同一页，**正常流程不用编辑代码，也不用复制脚本全文**。
+已经从 README 按钮安装并连接脚本时，会直接进入连接步骤，不用重复安装。也可以在实际使用的 Firefox 打开自己的生产服务网址，自动进入 `/setup`。安装和配置集中在同一页，**正常流程不用编辑代码，也不用复制脚本全文**。
 
 | 向导步骤 | 你需要做什么 | 如何确认成功 |
 | --- | --- | --- |
 | 1. 安装暴力猴 | 点“打开暴力猴官方安装页”，在 Firefox 确认添加；返回点“已安装，继续” | Firefox 扩展列表里已启用 Violentmonkey；网页上的继续按钮只是你的确认 |
-| 2. 安装推送脚本 | 点“安装正式推送脚本 3.1.0”，在暴力猴确认安装；返回检查或刷新 | 页面检测到正式脚本 3.1.0，然后进入连接步骤 |
+| 2. 安装推送脚本 | 点“安装正式推送脚本 3.2.0”，在暴力猴确认安装；返回检查或刷新 | 页面检测到正式脚本 3.2.0，然后进入连接步骤 |
 | 3. 连接并保存 | 输入部署时的 API_TOKEN，点“验证连接并保存” | 服务检查及 SMTP 登录均通过，令牌才保存，输入框清空；阅读提醒后点“继续启用书籍网站” |
 | 4. 启用书籍网站 | 粘贴你正常使用的 Z-Library HTTPS 书籍详情页网址，点“启用此站并打开书籍页” | 当前域名已启用，在新标签页打开书籍页；由你点击推送按钮才下载、发信 |
 
@@ -195,9 +215,9 @@ flowchart LR
 ### 7.3 安装正式推送脚本
 
 1. 在 `/setup` 的第 1 步完成暴力猴安装，点 **已安装，继续**。
-2. 在第 2 步点 **安装正式推送脚本 3.1.0**。暴力猴安装页中核对脚本名称 **Z-Library → Kindle Push**，确认安装。
+2. 在第 2 步点 **安装正式推送脚本 3.2.0**。暴力猴安装页中核对脚本名称 **Z-Library → Kindle Push**，确认安装。
 3. 返回向导点 **我已安装，重新检查**。新安装的脚本通常需要刷新页面才运行；仍未检测到时点 **刷新本页**。
-4. 识别到当前版本后，向导自动显示第 3 步；也可点击步骤栏返回查看 **正式推送脚本 3.1.0 已在本浏览器运行**。
+4. 识别到当前版本后，向导自动显示第 3 步；也可点击步骤栏返回查看 **正式推送脚本 3.2.0 已在本浏览器运行**。
 5. 按第 7.4 节连接服务。安装脚本本身不会自动读取服务器的 API_TOKEN。
 
 **旧版迁移**：如有 **Kindle EPUB 下载测试 0.1** 或 **Kindle Push — 普通 EPUB 下载推送**，先停用旧条目。此次正式名称变更后，暴力猴可能将它作为新脚本安装；**不要假定旧私有存储会自动迁移**。在新脚本中重新验证 API_TOKEN、启用站点，确认推送正常后再删除旧条目，避免同时出现两个推送按钮。
@@ -222,7 +242,7 @@ flowchart LR
 4. 在暴力猴管理页点 **＋** 新建脚本，全选替换默认代码后保存。Windows 使用 `Ctrl+A → Ctrl+V`；安卓使用编辑器的全选、粘贴和保存。
 5. 刷新向导，检测到当前脚本后继续第 3 步。
 
-不要直接安装 `src/userscript.template.js`，它是构建模板。正式安装地址为自己服务的 `/kindle-push.user.js`；接口文件名沿用旧版，脚本显示名称已经改为 **Z-Library → Kindle Push**。
+不要直接安装 `src/userscript.template.js`，它是构建模板。有两个正式安装入口：README 的公开通用安装包，或自己服务的 `/kindle-push.user.js`。它们由同一份模板生成、名称和 namespace 相同，任选其一；前者首次需连接自己的服务，后者已自动绑定当前服务。后安装的版本可能覆盖已有更新地址，但不需要同时保留两份脚本。
 
 ## 8. 从 Z-Library 推送到 Kindle
 
@@ -264,7 +284,7 @@ flowchart LR
 | 文件上限 | `project.config.json` 的 `maxFileMB`，整数 1–50 | 是；改后重新构建部署 |
 | Worker 名称、绑定与 migration | `wrangler.jsonc` | 是；一键部署可调整 Worker 名称 |
 | 项目版本 | `package.json` | 是 |
-| 服务地址 | 请求当前域名，自动生成脚本 | 无需手填 |
+| 服务地址 | 自己服务生成的脚本自动绑定；公开安装包首次在连接栏或菜单设置 | 只保存 origin；更换时清除旧令牌 |
 | SMTP 服务器/TLS | 已验证的 126 固定配置 | 是；不宣称兼容其他服务商 |
 
 构建将文件上限和版本注入 Worker、设置页和脚本，避免三处各改一次。部署不要只复制 Worker 文本；绑定和 migration 是服务的一部分。
@@ -272,6 +292,7 @@ flowchart LR
 ### 修改、更新和停用
 
 - **换 Kindle 地址/发件邮箱/授权码**：改对应 Cloudflare Secret 并部署；换发件邮箱还要更新 Amazon 白名单。
+- **公开安装包更换服务**：暴力猴菜单选择“连接或更换自己的 Cloudflare 服务”。会清除本机旧令牌，必须在新服务验证新值；不会把旧令牌发送给新服务。
 - **更换 API_TOKEN**：先在 Cloudflare 改 Secret，然后每台浏览器重新保存同一个新值。旧值失效后会返回 401。
 - **更新项目**：合并或下载新版本、重新部署，从自己的服务更新脚本。后续同名且同 namespace 的更新通常保留私有设置；从旧名称迁移至本版时必须按第 7.3 节重新配置。
 - **从 2.x 升级**：保留原四个 Secrets、Worker 名称、`MAIL_SENDER`、`MailSender` 和 migration `v2-mail-sender-sqlite`。本仓库默认新建名为 `zlibrary-kindle-push` 的 Worker；更新旧实例前，维护者必须把目标名称改回原名称，避免误创建另一实例。先备份/记录部署版本；在没有发信请求时更新。3.x 根路径改为设置页跳转；脚本改名迁移按第 7.3 节处理。
@@ -339,6 +360,8 @@ src/worker.template.js     Worker、鉴权、EPUB 校验和 SMTP
 src/userscript.template.js  Z-Library 浏览器推送脚本模板
 src/setup.html             四步安装向导及响应式样式
 src/setup.js               向导进度、安装帮助和手动测试入口
+src/installer-prefix.js    公开安装包的服务连接界面
+install/                   由 npm run build 生成并提交的可直接安装脚本
 scripts/build.mjs          统一构建版本、上限及内嵌脚本
 scripts/prepare-release.mjs 维护者填写公开仓库地址
 project.config.json        文件上限

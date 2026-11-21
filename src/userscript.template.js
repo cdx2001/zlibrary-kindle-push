@@ -104,6 +104,7 @@
         if(limits.busy)throw new Error('服务正在处理另一本书，请等完成后再验证。');
         const auth=await check('/smtp-auth',value);
         if(auth.status!=='authenticated'||auth.smtpCode!==235)throw new Error('邮箱登录未确认，请检查 SMTP 配置。');
+        if(typeof installerServiceIsCurrent==='function'&&!installerServiceIsCurrent(SERVICE))throw new Error('服务地址已更换，请关闭旧设置页并打开新服务。');
         GM_setValue('apiToken',value);verified=true;if(input)input.value='';
         connection.textContent='连接已验证，令牌已保存到本机油猴。现在可以启用书籍网站。';
         if(limits.configurationWarnings?.includes('MAILBOX_PREFIX_SIMILAR'))connection.textContent+=' 提醒：Kindle 与发件邮箱前缀相似，建议使用独立、难猜的 Kindle 前缀。';
@@ -167,6 +168,7 @@
   });
 
   function gm(options, max = 0) {
+    if(typeof installerServiceIsCurrent==='function'&&!installerServiceIsCurrent(SERVICE))return Promise.reject(new Error('服务地址已更换，请刷新书籍页或打开新服务设置页。'));
     return new Promise((resolve, reject) => {
       let handle, stopped = false;
       handle = GM_xmlhttpRequest({ ...options,

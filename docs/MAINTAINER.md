@@ -36,7 +36,7 @@ npm run release:prepare -- your-name/zlibrary-kindle-push
 npm run check:release
 ```
 
-此命令只更新 README 的部署按钮、移除审阅占位提示、更新 package.json 的 repository/bugs 元数据；**不创建仓库，不执行 git push，也不部署 Cloudflare**。不改业务域名，因为服务地址会在运行时自动识别。
+此命令更新 README 的部署与安装链接、移除审阅占位提示、更新 package.json 的 repository/bugs 元数据，并重新构建公开安装包；**不创建仓库，不执行 git push，也不部署 Cloudflare**。不改业务域名，因为服务地址会在运行时自动识别。
 
 只在你确认要发布后，使用 GitHub 网页或自己的 Git 客户端创建公开仓库并上传此目录中的发布文件。不要上传上一级目录——那是自用项目的工作目录，不属于开源仓库。
 
@@ -60,6 +60,8 @@ Cloudflare 一键按钮支持公开 GitHub/GitLab 仓库并自动配置资源；
 
 ## 版本与回滚
 
-版本号只改 `package.json`，重新构建；更新 CHANGELOG。升级依赖后提交 lockfile 并运行所有检查。当前 `miniflare` 固定到 Wrangler 对应的已测试版本（含 beta 标签），它仅是开发/测试依赖，不是生产 SMTP 依赖；升级时应一起核对其 API。
+版本号在 `package.json` 维护（同步 lockfile 的版本元数据），执行 `npm run build` 并提交生成的 `install/zlibrary-kindle-push.user.js`，否则可重复构建测试会失败；更新 CHANGELOG。升级依赖后提交 lockfile 并运行所有检查。当前 `miniflare` 固定到 Wrangler 对应的已测试版本（含 beta 标签），它仅是开发/测试依赖，不是生产 SMTP 依赖；升级时应一起核对其 API。
 
 更新既有实例前等待 busy:false，记录旧部署版本。回滚到旧代码时保留已创建的 DO 绑定和迁移历史，不为了“清理”添加删除类 migration；也不要在有请求时切换代码。回滚后的脚本版本与上限需要重新核对。
+
+公开安装包使用 main 分支更新地址。验证 README 的暴力猴按钮指向 Mozilla 官方页面，安装按钮返回带 userscript 元数据的正式脚本。Windows/Android 的真实扩展安装弹窗仍需浏览器验收；自动测试不代替这一步。
