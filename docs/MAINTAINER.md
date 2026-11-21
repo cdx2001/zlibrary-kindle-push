@@ -70,4 +70,4 @@ Cloudflare 一键按钮支持公开 GitHub/GitLab 仓库并自动配置资源；
 
 主仓库通过 GitHub Pages 发布 `tools/`：根路径是四参数配置与安装导航，`/token-generator.html` 是无需下载的令牌生成器。`.github/workflows/pages.yml` 只在主仓库运行，避免使用者的一键部署副本因未启用 Pages 而失败；fork 如需自行托管，应修改仓库条件并启用 Settings → Pages → GitHub Actions。
 
-发布内容只有静态页面和按钮 SVG，不包含 Cloudflare Secrets。生成器使用本机 Web Crypto，不发送生成值，不写入持久存储。安装导航页的三个按钮统一使用 232 × 48 的 SVG，所有外链设置 target=_blank 和 noopener/noreferrer；README 仅保留“开始配置”入口。
+发布内容为静态页面、本机参数核对脚本和按钮 SVG，不包含真实 Cloudflare Secrets。核对表默认明文，支持逐项隐藏和复制，CSP 禁止连接请求，不写入持久存储。生成器使用本机 Web Crypto，不发送生成值，不写入持久存储。安装导航页的三个按钮统一使用 232 × 48 的 SVG，所有外链设置 target=_blank 和 noopener/noreferrer；README 仅保留“开始配置”入口。

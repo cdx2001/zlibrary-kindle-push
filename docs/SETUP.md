@@ -110,6 +110,10 @@ flowchart LR
 | `SMTP_AUTH_CODE` | 126 的客户端授权码 | 邮箱网页登录密码 |
 | `KINDLE_EMAIL` | Amazon 中显示的 Kindle 接收邮箱 | Amazon 登录邮箱、126 发件邮箱 |
 
+**输入需要核对时：** 打开[在线配置页](https://cdx2001.github.io/zlibrary-kindle-push/)，在“明文核对四个参数”中填写。四项默认可见，支持显示/隐藏、格式检查和逐项复制；输入只在当前页面内存中，不上传、不持久保存，刷新或离开会清空。核对后复制到 Cloudflare 同名框，先全选再粘贴。格式通过不代表授权码有效，也不代表已经部署。
+
+Cloudflare 部署表单的 Secret 遮挡由平台控制，本项目不能通过模板把它改成明文。**已部署后填错：** Cloudflare → Workers & Pages → 你的 Worker → Settings → Variables and Secrets，编辑对应项，重新填写正确值并部署；保存后的旧 Secret 无法查看。修改 API_TOKEN 后，所有浏览器需用新值重新连接。修改邮箱或授权码后重新验证，Kindle 收件地址用小 EPUB 实际收书确认。无需删除 Worker。[官方说明](https://developers.cloudflare.com/workers/configuration/secrets/)
+
 生成 API_TOKEN 的方法任选一种：
 
 - 用密码管理器生成至少 32 位随机字符，不含空格，使用可见 ASCII；本项目接受 32–256 位。
