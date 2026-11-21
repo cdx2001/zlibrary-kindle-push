@@ -1,0 +1,52 @@
+{
+  "name": "zlibrary-kindle-push",
+  "version": "3.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Z-Library to Kindle EPUB push with a guided Firefox setup, Cloudflare Workers and 126 SMTP",
+  "engines": {
+    "node": ">=24.15.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "deploy": "node scripts/build.mjs && wrangler deploy --keep-vars",
+    "check:deploy": "node scripts/build.mjs && wrangler deploy --dry-run --outdir .test/bundle",
+    "test": "node scripts/prepare-tests.mjs && node --test test/*.test.mjs",
+    "test:runtime": "node scripts/prepare-tests.mjs && node test/runtime.mjs",
+    "token": "node scripts/token.mjs",
+    "secrets": "node scripts/secrets.mjs",
+    "release:prepare": "node scripts/prepare-release.mjs",
+    "check:release": "node scripts/check-release.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "4.166.0",
+    "miniflare": "5.20261119.0-beta"
+  },
+  "cloudflare": {
+    "bindings": {
+      "API_TOKEN": {
+        "description": "自己生成并保存的随机令牌，推荐 64 位十六进制字符。不是 Cloudflare API Token，也不是邮箱密码。部署后在每台浏览器设置同一值。"
+      },
+      "SMTP_USER": {
+        "description": "用于发信的完整 126 邮箱地址；必须加入 Amazon 的已认可发件人名单。不要填 Kindle 邮箱。"
+      },
+      "SMTP_AUTH_CODE": {
+        "description": "126 邮箱开启 SMTP 后生成的客户端授权码，不是网页登录密码。"
+      },
+      "KINDLE_EMAIL": {
+        "description": "Amazon 个人文档设置里的 Kindle 接收邮箱，不是 Amazon 登录邮箱。建议使用与发件邮箱不同、难猜的前缀；改名后填写新地址。"
+      },
+      "MAIL_SENDER": {
+        "description": "自动创建的 SQLite Durable Object，串行处理附件和邮件；支持 Workers Free。请保持类名和 migration。"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cdx2001/zlibrary-kindle-push.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cdx2001/zlibrary-kindle-push/issues"
+  }
+}

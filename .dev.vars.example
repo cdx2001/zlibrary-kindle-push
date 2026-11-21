@@ -1,0 +1,6 @@
+# Deploy to Cloudflare reads these names and prompts for your values.
+# Leave this public example EMPTY. Never commit actual values here.
+API_TOKEN=
+SMTP_USER=
+SMTP_AUTH_CODE=
+KINDLE_EMAIL=

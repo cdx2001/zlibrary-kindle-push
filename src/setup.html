@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Z-Library → Kindle Push · 开始使用</title>
+<style nonce="__NONCE__">
+:root{color-scheme:light;--ink:#173c4c;--muted:#516873;--paper:#fff;--ground:#edf3f5;--line:#c7d8df;--accent:#176378;--soft:#e3eff3;--ok:#246344}
+*{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--accent);text-underline-offset:3px}button,input,textarea{font:inherit}button,a.primary,a.secondary{min-height:46px;padding:10px 18px;border-radius:5px;cursor:pointer}button{border:1px solid var(--line);color:var(--ink);background:white}button:disabled{cursor:not-allowed;opacity:.5}.primary,a.primary{background:var(--accent);border:1px solid var(--accent);color:white;text-decoration:none;display:inline-block}.secondary,a.secondary{display:inline-block;border:1px solid var(--line);background:white;text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #b47c24;outline-offset:4px}header{max-width:1040px;margin:0 auto;padding:34px 24px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font:700 26px Georgia,"Songti SC",SimSun,serif;letter-spacing:-.5px}header small{color:var(--muted)}main{max-width:1040px;margin:0 auto;padding:0 24px 46px}.intro{margin:4px 0 25px;max-width:720px}h1{font:600 clamp(26px,4vw,36px)/1.35 Georgia,"Songti SC",SimSun,serif;margin:10px 0}h2{font-size:24px;line-height:1.4;margin:7px 0 12px}h3{font-size:17px;margin:0 0 7px}p{margin:10px 0}.muted,small{color:var(--muted)}.wizard{display:grid;grid-template-columns:220px minmax(0,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper);box-shadow:0 12px 34px #173c4c08}nav{padding:22px 14px;background:#f7fafb;border-right:1px solid var(--line)}nav ol{list-style:none;margin:0;padding:0}nav li+li{margin-top:10px}.step-link{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border-color:transparent;background:transparent;padding:11px 10px}.step-link[aria-current=step]{background:var(--soft);border-color:var(--line)}.number{display:grid;place-items:center;flex:0 0 30px;height:30px;border:1px solid var(--line);border-radius:50%;font-size:14px}.done .number{background:var(--ok);color:white;border-color:var(--ok)}.step-meta{display:block;font-size:12px;color:var(--muted)}.content{padding:30px 34px 34px;min-height:430px}.eyebrow{font-size:13px;color:var(--muted);letter-spacing:1px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 12px;align-items:center}.note{border-left:3px solid var(--line);padding:10px 15px;background:#f7fafb;margin:18px 0;font-size:14px}.status{padding:12px 15px;border:1px solid var(--line);border-radius:5px;background:#f7fafb;overflow-wrap:anywhere}.device-help{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}.device-help>div{padding:15px;background:#f7fafb;border-radius:5px}.device-help p{font-size:14px;margin:0}label{display:block;font-weight:600;margin:20px 0 7px}input{width:100%;padding:12px;border:1px solid #8da8b4;border-radius:5px;background:white;color:var(--ink)}input[type=file]{font-size:14px}details{margin:20px 0}summary{cursor:pointer;color:var(--accent)}textarea,pre{width:100%;font:13px/1.6 ui-monospace,Consolas,monospace;overflow-wrap:anywhere;white-space:pre-wrap;background:#f7fafb;border:1px solid var(--line);border-radius:5px;padding:12px}textarea{resize:vertical}pre{max-height:320px;overflow:auto}.tools{margin-top:26px;padding:0 4px}.tools>details{border-top:1px solid var(--line);padding:18px 0}.tools .inside{max-width:740px}.success{color:var(--ok);font-weight:600}.service-url{font-size:13px;overflow-wrap:anywhere}footer{font-size:13px;color:var(--muted);margin-top:24px}[hidden]{display:none!important}
+@media(max-width:680px){header{padding:22px 18px 12px;flex-direction:column;align-items:flex-start;gap:4px}.brand{font-size:22px}main{padding:0 16px 30px}header small{font-size:12px}.wizard{display:block}nav{border-right:0;border-bottom:1px solid var(--line);padding:12px 8px}nav ol{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}nav li+li{margin:0}.step-link{flex-direction:column;gap:5px;text-align:center;padding:8px 2px;font-size:12px;line-height:1.4}.step-meta{display:none}.number{flex-basis:auto;width:26px;height:26px}.content{padding:22px 19px;min-height:410px}.device-help{grid-template-columns:1fr;gap:8px}.actions>*{flex:1;text-align:center}.actions .primary{flex-basis:100%}h2{font-size:22px}}
+</style></head>
+<body>
+<header><span class="brand">Z-Library → Kindle Push</span><small>__VERSION__ · 最大 __MAX_MB__ MB</small></header>
+<main>
+<div class="intro"><h1>从 Z-Library，推送到 Kindle。</h1><p class="muted">跟着四步完成这台浏览器的设置。不改代码，正常安装无需复制脚本。</p><p class="service-url">当前服务：<span id="service-url"></span></p></div>
+<div class="wizard">
+<nav aria-label="设置进度"><ol>
+<li><button class="step-link" data-step="0" aria-current="step"><span class="number">1</span><span>安装暴力猴<small class="step-meta" id="progress-0">等待确认</small></span></button></li>
+<li><button class="step-link" data-step="1"><span class="number">2</span><span>安装推送脚本<small class="step-meta" id="progress-1">等待检测</small></span></button></li>
+<li><button class="step-link" data-step="2"><span class="number">3</span><span>连接并保存<small class="step-meta" id="progress-2">等待验证</small></span></button></li>
+<li><button class="step-link" data-step="3"><span class="number">4</span><span>启用书籍网站<small class="step-meta" id="progress-3">等待启用</small></span></button></li>
+</ol></nav>
+<div class="content">
+<section id="step-0" aria-labelledby="heading-0"><span class="eyebrow">第 1 步 / 共 4 步</span><h2 id="heading-0" tabindex="-1">给 Firefox 安装暴力猴</h2>
+<p>暴力猴负责运行推送脚本。请在你准备读书的 Firefox 中打开本页；电脑和手机各做一次。</p>
+<div class="device-help"><div><h3>Windows 电脑</h3><p>打开官方扩展页 → 添加到 Firefox → 确认添加。安装后从工具栏的扩展菜单找到暴力猴。</p></div><div><h3>Android 手机</h3><p>在 Firefox 打开官方扩展页并添加；也可从 ⋮ → 扩展中安装。不要使用聊天软件内置浏览器。</p></div></div>
+<div class="actions"><a class="primary" href="https://addons.mozilla.org/firefox/addon/violentmonkey/" target="_blank" rel="noopener noreferrer">打开暴力猴官方安装页</a><button id="confirm-extension">已安装，继续</button></div>
+<p class="note">浏览器会要求你本人确认安装和权限。“已安装”是你的确认，不是网页自动检测结果。装好扩展后，还要完成下一步的推送脚本安装。</p></section>
+
+<section id="step-1" aria-labelledby="heading-1" hidden><span class="eyebrow">第 2 步 / 共 4 步</span><h2 id="heading-1" tabindex="-1">安装你的专属推送脚本</h2>
+<p>点击下面的按钮，在暴力猴页面确认安装。服务地址会自动填好，不需要打开编辑器或改代码。</p>
+<div class="actions"><a class="primary" id="install-script" href="/kindle-push.user.js" target="_blank" rel="noopener noreferrer">安装正式推送脚本 __VERSION__</a><button id="check-script">我已安装，重新检查</button><button id="reload-page">刷新本页</button></div>
+<p id="kindle-push-extension-status" class="status" role="status" data-script-version="" data-token-state="missing" data-setup-busy="false">尚未检测到正式推送脚本。这不能判断暴力猴是否已安装。</p>
+<p id="script-check-note" role="status"></p>
+<p class="muted">安装成功后返回此页检查；若仍没有响应，刷新本页。只装旧的“Kindle EPUB 下载测试 0.1”不够，请停用旧测试条目。若从旧版“Kindle Push — 普通 EPUB 下载推送”升级，也请停用旧条目；新版改了脚本名称，需要重新保存令牌并启用站点。</p>
+<div class="actions"><button id="next-connection" disabled>继续连接服务</button></div>
+<details><summary>没有安装弹窗？查看备用方法</summary><p>先确认暴力猴已启用，再点击安装按钮。只有仍无法安装时，才使用下面的复制方式：复制全文 → 暴力猴管理页“＋” → 全选替换默认代码 → 保存。</p><button id="copy-script">复制完整正式脚本（备用）</button><p id="copy-status" role="status"></p><textarea id="script-source" hidden readonly rows="8" aria-label="完整正式脚本"></textarea></details></section>
+
+<section id="step-2" aria-labelledby="heading-2" hidden><span class="eyebrow">第 3 步 / 共 4 步</span><h2 id="heading-2" tabindex="-1">验证连接，保存一次即可</h2>
+<p>填入部署时保存的访问令牌。验证会检查服务和 126 邮箱登录，<strong>不会发送邮件</strong>；成功后才保存到这台浏览器的暴力猴中。</p>
+<label for="token">访问令牌 API_TOKEN</label><input id="token" type="password" autocomplete="off" spellcheck="false" aria-describedby="token-help"><p id="token-help" class="muted">不是 Cloudflare 账号令牌，也不是邮箱授权码。已有保存值时，可留空验证原连接。</p>
+<div class="actions"><button id="save-token" class="primary" disabled>验证连接并保存</button></div>
+<p id="connection-status" class="status" role="status">先完成正式脚本安装，验证按钮才会可用。</p>
+<div class="actions"><button id="next-site" disabled>继续启用书籍网站</button></div>
+<details><summary>令牌丢了，或者邮箱配置不对？</summary><p>在 Cloudflare 的当前 Worker → Settings → Variables and Secrets 修改配置。API_TOKEN 是本工具令牌，SMTP_USER 是完整 126 发件邮箱，SMTP_AUTH_CODE 是客户端授权码，KINDLE_EMAIL 是 Kindle 接收地址。</p><p>令牌丢失可自行生成新值并更换 Cloudflare 的 API_TOKEN；本页不能读取服务器中的秘密。换值后所有浏览器都要重新连接。</p><p>完整发件邮箱必须加入 Amazon 已认可名单。Kindle 邮箱建议使用与发件邮箱明显不同、难猜的前缀；相同字符不是禁止规则，也不能保证永不需要邮件确认。</p></details></section>
+
+<section id="step-3" aria-labelledby="heading-3" hidden><span class="eyebrow">第 4 步 / 共 4 步</span><h2 id="heading-3" tabindex="-1">选择你使用的 Z-Library 网站</h2>
+<p>粘贴你正常使用的 Z-Library HTTPS 书籍详情页网址。点击后会记住这个网站并在新标签页打开，<strong>不会自动下载或发送</strong>。</p>
+<label for="book-url">书籍详情页网址</label><input id="book-url" type="url" placeholder="https://你的书籍网站/book/…" autocomplete="off" spellcheck="false">
+<div class="actions"><button id="open-book" class="primary" disabled>启用此站并打开书籍页</button></div>
+<p id="site-status" class="status" role="status">先在第 3 步验证连接。</p>
+<p>打开后，点击书名附近的“推送 EPUB 到 Kindle”。换域名或镜像需要重新启用。也可以直接到书籍详情页，点击脚本显示的“在此站启用 Kindle 推送”。</p>
+<p class="note">向导完成只表示配置已就绪。实际收书还要等待 126 发送、Amazon 转换与 Kindle 同步。请先用一本文档较小、你有权使用的 EPUB 验证。</p></section>
+</div></div>
+
+<div class="tools"><details><summary>手动上传与邮件排错（可选）</summary><div class="inside">
+<p>仅在需要排错或手动上传时使用。下面的工具读取第 3 步输入框中的令牌，不会读取暴力猴保存的秘密；若输入框已清空，请临时重新填写。</p>
+<div class="actions"><button id="limits">检查服务版本</button><button id="auth">只测试 SMTP 登录</button><button id="mail">发送普通测试邮件给自己</button></div>
+<label for="file">选择本地 EPUB，最大 __MAX_MB__ MB（__MAX_BYTES_LABEL__ 字节）</label><input id="file" type="file" accept=".epub,application/epub+zip"><div class="actions"><button id="push">推送所选 EPUB 到 Kindle</button></div>
+<p><small>一次一本；__MAX_MB__ MB 文件编码后约 __MIME_MB__ MB，实际接收受 126 与 Amazon 限制。结果未知先查邮箱和 Kindle，不自动重试。</small></p><pre id="result" role="status">尚未执行测试。</pre></div></details></div>
+<footer>非 Z-Library 或 Amazon 官方项目。只使用原本有权访问的普通下载入口。没有后台自动发信，也不绕过会员、验证码或下载次数限制。</footer>
+</main><script nonce="__NONCE__">__SETUP_SCRIPT__</script></body></html>

@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<title>Kindle Push 本地令牌生成器</title>
+<style>body{max-width:680px;margin:40px auto;padding:20px;font:18px/1.6 system-ui}input{width:100%;box-sizing:border-box;font:16px monospace;padding:12px}button{font:inherit;padding:10px;margin:12px 8px 12px 0}</style>
+<h1>生成 API_TOKEN</h1>
+<p>下载此文件后，用浏览器打开。只使用本机随机数，不发送网络请求。令牌用于本项目，不是 Cloudflare API Token，也不是邮箱授权码。</p>
+<button id="generate">生成新令牌</button><button id="copy" disabled>复制令牌</button>
+<input id="token" readonly aria-label="API_TOKEN"><p id="status">生成后请保存在密码管理器中；部署和浏览器设置要使用同一个值。不要上传 GitHub 或发到聊天中。</p>
+<script>
+const token=document.getElementById('token'),status=document.getElementById('status');
+document.getElementById('generate').onclick=()=>{token.value=Array.from(crypto.getRandomValues(new Uint8Array(32)),x=>x.toString(16).padStart(2,'0')).join('');document.getElementById('copy').disabled=false;status.textContent='已在本机生成。生成新值不会修改已部署服务；更换时需更新 Cloudflare Secret 和所有浏览器。';};
+document.getElementById('copy').onclick=async()=>{try{await navigator.clipboard.writeText(token.value);status.textContent='已复制，请私下保存。';}catch{token.focus();token.select();status.textContent='请手动复制选中的令牌。';}};
+</script></html>

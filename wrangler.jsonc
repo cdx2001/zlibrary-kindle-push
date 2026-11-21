@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "zlibrary-kindle-push",
+  "main": "dist/worker.js",
+  "compatibility_date": "2026-11-21",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": false },
+  "secrets": { "required": ["API_TOKEN", "SMTP_USER", "SMTP_AUTH_CODE", "KINDLE_EMAIL"] },
+  "durable_objects": { "bindings": [{ "name": "MAIL_SENDER", "class_name": "MailSender" }] },
+  "migrations": [{ "tag": "v2-mail-sender-sqlite", "new_sqlite_classes": ["MailSender"] }]
+}
