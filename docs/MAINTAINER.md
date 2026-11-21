@@ -1,14 +1,14 @@
 # 维护者：审阅、发布与一键部署验收
 
-本文给项目维护者。普通使用者只需 README 的部署按钮和设置步骤。
+本文给项目维护者。普通使用者从 README 的“开始配置”进入在线指南。
 
 ## 当前交付状态
 
-源码、配置、文档、CI 和 MIT 已整理为独立项目。项目仓库为 [cdx2001/zlibrary-kindle-push](https://github.com/cdx2001/zlibrary-kindle-push)，README 部署按钮已指向该仓库。发布源码不会自动更新原有线上服务；每位使用者在自己的 Cloudflare 账号完成部署。真实的新用户部署验收范围见 docs/VALIDATION.md。
+源码、配置、文档、CI 和 MIT 已整理为独立项目。项目仓库为 [cdx2001/zlibrary-kindle-push](https://github.com/cdx2001/zlibrary-kindle-push)，README 只保留配置页入口，在线配置页内的部署按钮指向该仓库。发布源码不会自动更新原有线上服务；每位使用者在自己的 Cloudflare 账号完成部署。真实的新用户部署验收范围见 docs/VALIDATION.md。
 
 ## 审阅重点
 
-1. 阅读 README：尤其四个 Secrets、邮箱前缀建议、白名单、50 MB 限制、安装流程。
+1. 阅读 README 与在线配置页：尤其四个 Secrets、邮箱前缀建议、白名单、50 MB 限制、安装流程。
 2. 看 `project.config.json`：文件上限集中维护；默认无需使用者修改。
 3. 看 `wrangler.jsonc`：只部署一个 Worker 和 SQLite Durable Object，保留 migration 标签。
 4. 看 `.dev.vars.example` 和 `package.json.cloudflare.bindings`：空值秘密名称及部署表单的解释。
@@ -36,7 +36,7 @@ npm run release:prepare -- your-name/zlibrary-kindle-push
 npm run check:release
 ```
 
-此命令更新 README 的部署与安装链接、移除审阅占位提示、更新 package.json 的 repository/bugs 元数据，并重新构建公开安装包；**不创建仓库，不执行 git push，也不部署 Cloudflare**。不改业务域名，因为服务地址会在运行时自动识别。
+此命令更新 package.json 的 repository/bugs 元数据，并重新构建公开安装包；**不创建仓库，不执行 git push，也不部署 Cloudflare**。不改业务域名，因为服务地址会在运行时自动识别。若要发布到自己的项目仓库，还需手动核对 tools/index.html 中的仓库与脚本链接，以及 README 的在线配置页地址；该命令不会替你创建或迁移 GitHub Pages。
 
 只在你确认要发布后，使用 GitHub 网页或自己的 Git 客户端创建公开仓库并上传此目录中的发布文件。不要上传上一级目录——那是自用项目的工作目录，不属于开源仓库。
 
@@ -46,7 +46,7 @@ npm run check:release
 
 公开仓库和 Cloudflare/GitHub 授权是部署按钮的前提。未公开前只能完成配置、构建和运行时检查，不能声称新用户一键部署已端到端实测。
 
-1. 使用未部署过该模板的测试账号/项目，点击 README 的按钮。
+1. 使用未部署过该模板的测试账号/项目，从 README 进入在线配置页，点击部署按钮。
 2. 确认它创建使用者自己的仓库副本，目标 Worker 名称正确。
 3. 确认四个 Secret 字段出现且描述正确；无默认共享令牌，填写私下保存的测试凭据。
 4. 确认构建使用 Node 24（`.node-version`），执行 `npm run build` 和 `npm run deploy`。
@@ -64,10 +64,10 @@ Cloudflare 一键按钮支持公开 GitHub/GitLab 仓库并自动配置资源；
 
 更新既有实例前等待 busy:false，记录旧部署版本。回滚到旧代码时保留已创建的 DO 绑定和迁移历史，不为了“清理”添加删除类 migration；也不要在有请求时切换代码。回滚后的脚本版本与上限需要重新核对。
 
-公开安装包使用 main 分支更新地址。验证 README 的暴力猴按钮指向 Mozilla 官方页面，安装按钮返回带 userscript 元数据的正式脚本。Windows/Android 的真实扩展安装弹窗仍需浏览器验收；自动测试不代替这一步。
+公开安装包使用 main 分支更新地址。验证在线配置页的暴力猴按钮指向 Mozilla 官方页面，安装按钮返回带 userscript 元数据的正式脚本。Windows/Android 的真实扩展安装弹窗仍需浏览器验收；自动测试不代替这一步。
 
 ## 在线指南与令牌生成器
 
 主仓库通过 GitHub Pages 发布 `tools/`：根路径是四参数配置与安装导航，`/token-generator.html` 是无需下载的令牌生成器。`.github/workflows/pages.yml` 只在主仓库运行，避免使用者的一键部署副本因未启用 Pages 而失败；fork 如需自行托管，应修改仓库条件并启用 Settings → Pages → GitHub Actions。
 
-发布内容只有静态页面和按钮 SVG，不包含 Cloudflare Secrets。生成器使用本机 Web Crypto，不发送生成值，不写入持久存储。README 与导航页共用 232 × 48 的 SVG；导航页所有外链设置 target=_blank 和 noopener/noreferrer，GitHub README 自身仍受平台链接过滤规则影响。
+发布内容只有静态页面和按钮 SVG，不包含 Cloudflare Secrets。生成器使用本机 Web Crypto，不发送生成值，不写入持久存储。安装导航页的三个按钮统一使用 232 × 48 的 SVG，所有外链设置 target=_blank 和 noopener/noreferrer；README 仅保留“开始配置”入口。
