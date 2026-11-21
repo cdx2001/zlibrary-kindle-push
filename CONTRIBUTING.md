@@ -4,7 +4,7 @@
 
 1. 安装 Node.js 24.15+，执行 `npm ci`。
 2. 修改 `src/` 模板，文件上限只在 `project.config.json` 修改，版本只在 `package.json` 修改。
-3. 执行 `npm test`；涉及平台调用时也执行 `npm run test:runtime`。
+3. 执行 `npm run build`、`npm test`；提交更新后的 `install/zlibrary-kindle-push.user.js`。涉及平台调用时也执行 `npm run test:runtime`。
 4. 执行 `npm run check:deploy` 与 `npm run check:release -- --allow-unpublished`。
 5. PR 说明具体问题、行为变化、验证方式及尚未验证的外部限制。
 
